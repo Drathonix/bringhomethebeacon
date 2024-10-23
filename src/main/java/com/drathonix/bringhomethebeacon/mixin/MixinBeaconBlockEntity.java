@@ -21,7 +21,10 @@ import java.util.List;
 public class MixinBeaconBlockEntity {
     @Redirect(method = "applyEffects",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getEntitiesOfClass(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;"))
     private static <T extends Entity> List<T> intercept(Level instance, Class<T> aClass, AABB aabb){
-        aabb = aabb.setMinY(instance.getMinBuildHeight());
+        //? <1.21.2
+        /*aabb = aabb.setMinY(instance.getMinBuildHeight());*/
+        //? >1.21.1
+        aabb = aabb.setMinY(instance.getMinY());
         return instance.getEntitiesOfClass(aClass,aabb);
     }
 }
